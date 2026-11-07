@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e1621">
+<title>Everest Scale</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="bar">
+  <h1>▲ Everest Scale</h1>
+  <button id="newPhoto" class="ghost" hidden>New photo</button>
+</header>
+
+<main>
+  <section id="start" class="start">
+    <p class="lead">Snap any mountain. We'll stand Mt.&nbsp;Everest behind it, at the same scale, so you can see how they really compare.</p>
+    <label class="big-btn primary">
+      📷 Take a photo
+      <input id="camInput" type="file" accept="image/*" capture="environment" hidden>
+    </label>
+    <label class="big-btn">
+      🖼️ Choose from library
+      <input id="fileInput" type="file" accept="image/*" hidden>
+    </label>
+    <button id="sampleBtn" class="link">or try a sample scene</button>
+    <ol class="how">
+      <li>Take a picture of a mountain.</li>
+      <li>Drag the <b class="c-summit">summit</b> marker to its peak and the <b class="c-base">base</b> marker to its foot.</li>
+      <li>Pick the mountain (or let your GPS find nearby peaks) and its base elevation.</li>
+      <li>Everest appears behind it, to scale. Save or share the result.</li>
+    </ol>
+  </section>
+
+  <section id="editor" class="editor" hidden>
+    <div class="stage">
+      <canvas id="view"></canvas>
+      <div id="hint" class="hint">Drag <span class="c-summit">●</span> to the summit and <span class="c-base">●</span> to the base. Drag anywhere else to slide Everest.</div>
+    </div>
+
+    <div class="panel">
+      <div id="stat" class="stat"></div>
+
+      <div class="group">
+        <div class="row">
+          <label for="preset">Mountain</label>
+          <select id="preset"></select>
+        </div>
+        <div class="row">
+          <label for="summitIn">Summit elevation</label>
+          <div class="unit-input"><input id="summitIn" type="number" inputmode="decimal" step="1"><span class="unit"></span></div>
+        </div>
+        <div class="row">
+          <label for="baseIn">Elevation at base marker</label>
+          <div class="unit-input"><input id="baseIn" type="number" inputmode="decimal" step="1"><span class="unit"></span></div>
+        </div>
+        <button id="locateBtn" class="btn">📍 Use my location (base elevation + nearby peaks)</button>
+        <div id="locStatus" class="small"></div>
+        <div class="row" id="nearbyRow" hidden>
+          <label for="nearby">Peaks near you</label>
+          <select id="nearby"></select>
+        </div>
+        <div class="row">
+          <label>Units</label>
+          <div class="seg">
+            <button data-unit="m" class="on">m</button><button data-unit="ft">ft</button>
+          </div>
+        </div>
+      </div>
+
+      <details class="group" open>
+        <summary>Look &amp; feel</summary>
+        <label class="check"><input id="occlude" type="checkbox" checked> <span>Put Everest <i>behind</i> the mountain (auto sky detection)</span></label>
+        <label class="check"><input id="fit" type="checkbox" checked> Extend sky so Everest's summit fits</label>
+        <label class="check"><input id="showMask" type="checkbox"> Show detected sky</label>
+        <div class="row"><label for="threshold">Sky detection sensitivity</label><input id="threshold" type="range" min="8" max="120" value="38"></div>
+        <div class="row"><label for="haze">Atmospheric haze</label><input id="haze" type="range" min="0" max="85" value="30"></div>
+        <div class="row"><label for="opacity">Everest opacity</label><input id="opacity" type="range" min="15" max="100" value="100"></div>
+      </details>
+
+      <div class="actions">
+        <button id="saveBtn" class="btn primary">⬇︎ Save / share image</button>
+      </div>
+      <p class="small note">Assumes Everest stands the same distance away as your mountain, measured from the same base elevation. Everest: 8,849&nbsp;m (29,032&nbsp;ft).</p>
+    </div>
+  </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
